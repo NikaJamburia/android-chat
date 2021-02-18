@@ -7,6 +7,7 @@ class MessageContentPreview(
     private val previewSize: Int
 ) {
     fun showTo(user: String): String {
+        if (!message.canBeViewedBy(user)) { error("User $user cant view this message") }
         val text = message.content
         return if (text.length > previewSize) {
             prefixFor(user) + text.substring(0, previewSize) + "..."

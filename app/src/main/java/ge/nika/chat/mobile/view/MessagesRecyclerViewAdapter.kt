@@ -8,26 +8,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nika.chat.R
+import ge.nika.chat.core.inbox.Inbox
 import ge.nika.chat.core.inbox.InboxItem
 
 class MessagesRecyclerViewAdapter(
-    private val inboxItem: List<InboxItem>
+    inbox: Inbox
 ): RecyclerView.Adapter<MessagesRecyclerViewAdapter.ViewHolder> () {
+
+    private val inboxItems = inbox.asList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.messages_list_row, parent, false))
 
-    override fun getItemCount(): Int = inboxItem.size
+    override fun getItemCount(): Int = inboxItems.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = inboxItem[position]
-        if (item.containsNewMessages) {
+        val item = inboxItems[position]
+        if (item.newMessagesCount > 0) {
             holder.markUnseen(item.newMessagesCount)
         }
 
         holder.msgContent.text = item.lastMessageContent
-        holder.msgTimeAgo.text = item.timeAfterLastMsg
-        holder.msgSender.text = item.sender
+        holder.msgTimeAgo.text = item.timeSinceLastMsg
+        holder.msgSender.text = item.opponentName
 
     }
 

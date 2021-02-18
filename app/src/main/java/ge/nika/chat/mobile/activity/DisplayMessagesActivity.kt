@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.nika.chat.ApplicationContainer
 import ge.nika.chat.R
+import ge.nika.chat.core.inbox.Inbox
 import ge.nika.chat.mobile.view.MessagesRecyclerViewAdapter
 import ge.nika.chat.core.inbox.InboxItem
 import ge.nika.chat.util.MESSAGES_RECEIVER_NAME
@@ -24,11 +25,10 @@ class DisplayMessagesActivity : AppCompatActivity() {
 
     }
 
-    private fun displayInbox(inboxItems: List<InboxItem>) {
+    private fun displayInbox(inbox: Inbox) {
         val recyclerView = findViewById<RecyclerView>(R.id.messagesView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter =
-            MessagesRecyclerViewAdapter(inboxItems)
+        recyclerView.adapter = MessagesRecyclerViewAdapter(inbox)
     }
 
     private fun displayReceiverName(receiverName: String?) {

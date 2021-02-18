@@ -5,23 +5,19 @@ import java.time.LocalDateTime
 
 class InboxItemFromMessageGroup(
     private val messages: List<Message>,
-    private val opponent: String
+    private val user: String,
+    private val onTime: LocalDateTime
 ) {
     fun create(): InboxItem {
-        val latestMsg = messages.first()
+        val latestMsg = messages.last()
         return InboxItem(
-            opponent,
-            MessageContentPreview(latestMsg, 50)
-                .showTo(latestMsg.opponentFor(opponent)),
-            TimeSinceMessageSent(
-                latestMsg,
-                LocalDateTime.now()
-            ).asString(),
-            isNotSeen(latestMsg),
-            messages.count { isNotSeen(it) }
+            latestMsg.opponentFor(user),
+            MessageContentPreview(latestMsg, 50).showTo(user),
+            TimeSinceMessageSent(latestMsg, onTime).asString(),
+            messages.count { it.isNotSeenBy(user) }
         )
     }
 
-    private fun isNotSeen(msg: Message) =
-        msg.sender == opponent && msg.isNew()
+    private fun Message.isNotSeenBy(user: String) =
+        this.sender == this.opponentFor(user) && this.isNew()
 }

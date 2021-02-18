@@ -5,6 +5,7 @@ import ge.nika.chat.core.message.MessageStatus.SEEN
 import org.junit.Assert.*
 import org.junit.Test
 import java.lang.IllegalStateException
+import java.time.LocalDate
 import java.time.LocalDateTime.now
 import kotlin.test.assertFailsWith
 

@@ -1,9 +1,8 @@
 package ge.nika.chat.core.inbox
 
 data class InboxItem (
-    val sender: String,
+    val opponentName: String,
     val lastMessageContent: String,
-    val timeAfterLastMsg: String,
-    val containsNewMessages: Boolean,
+    val timeSinceLastMsg: String,
     val newMessagesCount: Int
 )
