@@ -12,6 +12,7 @@ class Inbox (
 ) {
     fun asList(): List<InboxItem> =
         messageRepository.listForUser(user, fromDate, viewingDate)
+            .sortedByDescending { it.sendTime }
             .groupBy { it.opponentFor(user) }
             .asSequence()
             .map { InboxItemFromMessageGroup(it.value, user, viewingDate).create() }

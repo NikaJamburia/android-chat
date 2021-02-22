@@ -16,11 +16,11 @@ class InMemoryMessageRepository(
         existingMessages
             .filter { it.canBeViewedBy(user) }
             .filter { it.sendTime.isBefore(toDate) && it.sendTime.isAfter(fromDate) }
-            .sortedBy { it.sendTime }
+            .sortedByDescending { it.sendTime }
 
     override fun listForUser(user: String): List<Message> =
         existingMessages
             .filter { it.canBeViewedBy(user) }
-            .sortedBy { it.sendTime }
+            .sortedByDescending { it.sendTime }
 
 }

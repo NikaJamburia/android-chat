@@ -10,15 +10,15 @@ class TimeSinceMessageSent(
 ) {
     fun asString(): String {
         val duration = Duration.between(message.sendTime, fromTime)
-        return if (duration.toDays() < 1) {
-            if (duration.toHours() < 1) {
-                ago(duration.toMinutes(), "Minute")
-            } else {
-                ago(duration.toHours(), "Hour")
-            }
-        } else {
-            ago(duration.toDays(), "Day")
-        }
+        return sequenceOf(
+            Pair(duration.toDays(), "Day"),
+            Pair(duration.toHours(), "Hour"),
+            Pair(duration.toMinutes(), "Minute"),
+            Pair(duration.seconds, "Second")
+        )
+            .filter { it.first != 0L }
+            .map { ago(it.first, it.second) }
+            .first()
     }
 
     private fun ago(number: Long, timeUnit: String): String =

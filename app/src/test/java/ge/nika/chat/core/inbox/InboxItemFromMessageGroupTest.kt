@@ -1,7 +1,8 @@
 package ge.nika.chat.core.inbox
 
-import ge.nika.chat.core.message.Message
-import ge.nika.chat.core.message.MessageStatus.*
+import ge.nika.chat.test_utils.beqa
+import ge.nika.chat.test_utils.nika
+import ge.nika.chat.test_utils.nika_beqa_300Bucks
 import org.junit.Test
 import java.lang.IllegalStateException
 import java.time.LocalDateTime.parse
@@ -12,18 +13,10 @@ class InboxItemFromMessageGroupTest {
 
     @Test
     fun correctInformationIsShownToUsers() {
-        val nika = "Nika"
-        val beqa = "Beqa"
+
         val inboxViewTime = parse("2021-01-19T12:58:00")
 
-        val messages = listOf(
-            Message(nika, beqa, parse("2021-01-19T12:31:00"), "Hi!", SEEN),
-            Message(beqa, nika, parse("2021-01-19T12:32:00"), "Hello!", SEEN),
-            Message(nika, beqa, parse("2021-01-19T12:33:00"), "How Are You?", SEEN),
-            Message(beqa, nika, parse("2021-01-19T12:35:00"), "Good! You?", SEEN),
-            Message(nika, beqa, parse("2021-01-19T12:37:00"), "Nice!", NEW),
-            Message(nika, beqa, parse("2021-01-19T12:38:00"), "Can I borrow 300 bucks?", NEW)
-        )
+        val messages = nika_beqa_300Bucks()
 
         val itemForNika = InboxItemFromMessageGroup(messages, nika, inboxViewTime).create()
         assertEquals(beqa, itemForNika.opponentName)

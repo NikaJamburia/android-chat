@@ -9,7 +9,7 @@ class InboxItemFromMessageGroup(
     private val onTime: LocalDateTime
 ) {
     fun create(): InboxItem {
-        val latestMsg = messages.last()
+        val latestMsg = messages.maxBy { it.sendTime }!!
         return InboxItem(
             latestMsg.opponentFor(user),
             MessageContentPreview(latestMsg, 50).showTo(user),
